@@ -31,7 +31,7 @@ async function test() {
         method: 'GET',
         path: '/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf',
         queries: {
-            chatQuery: ["What is Uniswap?"]
+            chatQuery: ["swap 0.000001 eth for usdt on arbitrum?"]
         },
         secret: { brianApiKey: process.env.BRIAN_API_KEY },
         headers: {},
@@ -42,7 +42,7 @@ async function test() {
         method: 'POST',
         path: '/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf',
         queries: {
-            chatQuery: ["What is Uniswap?"],
+            chatQuery: ["swap 0.000001 eth for usdt on arbitrum?"],
         },
         secret: { brianApiKey: process.env.BRIAN_API_KEY },
         headers: {},
@@ -54,7 +54,7 @@ async function test() {
         method: 'GET',
         path: '/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf',
         queries: {
-            chatQuery: ["What is Uniswap?"]
+            chatQuery: ["swap 0.000001 eth for usdt on arbitrum?"]
         },
         secret: { brianApiKey: "BRIAN_API_KEY" },
         headers: {},
