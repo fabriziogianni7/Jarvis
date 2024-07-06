@@ -1,41 +1,3 @@
-<div align="center">
-  <a href="https://github.com/Phala-Network/ai-agent-template-brian">
-    <h1>AI Agent Contract Template with Brian</h1>
-    <img height="320" src="./public/AI-Agent-Contract.jpg" />
-    <br />
-  </a>
-  <p align="center">
-    Host your AI Agent Contract on Phala's decentralized serverless cloud.
-    <br />
-    <a href="https://github.com/Phala-Network/ai-agent-template-brian"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="QmQu9AmBL13tyGpxgg5ASt96WQ669p63rnJRWiAo9st8ns/0?key=c0c0105ba56276cd&chatQuery=When%20did%20humans%20land%20on%20the%20moon">View Demo</a>
-    ·
-    <a href="https://github.com/Phala-Network/ai-agent-template-brian/issues">Report Bug</a>
-    ·
-    <a href="https://discord.gg/DXGGJajW">Discord</a>
-  </p>
-
-  <h3>Architecure Overview</h3>
-  <img height="320" src="./public/ai-agent-architecture.jpg" />
-</div>
-
-## 🤖 What Is This?!
-
-<div align="center">
-  <img height="240" src="https://www.jlwranglerforums.com/forum/attachments/zoolander-gif.325299/">
-</div>
-
-The Brian AI Agent template is a **MINIMAL** template to build an AI Agent that can be hosted on Phala Network's decentralized hosting protocol. Unlike Vercel or other FaaS, it allows you to publish your AI Agent compiled code to IPFS and hosts it on a fully decentralized FaaS cloud with the following benefits:
-
-- 💨 Ship Fast: Build and ship with familiar toolchain in minutes
-- ⛑️ Secure: Execution guarded by rock solid TEE / Intel SGX
-- 🔒 Private: Host API keys and user privacy at ease
-- 💎 Unstoppable: Powered by IPFS and Phala's 35k+ decentralized TEE workers
-
-[//]: # (<img width="320" src="https://media1.tenor.com/m/NBtFH5F9QTgAAAAd/what-is-my-purpose-butter.gif" />)
-
 ## Getting Started
 ### Prepare
 Install dependencies
@@ -130,7 +92,7 @@ npm run publish-agent
 ```
 or (if the previous method fails) you could alternatively use `CURL`:
 ```shell
-npm run alternative-publish-method
+curl -F file=@./dist/index.js https://agents.phala.network/ipfs
 ```
 
 Upon a successful upload, the command should show the URL to access your AI Agent.
@@ -162,11 +124,6 @@ AI Agent Contract deployed at: https://agents.phala.network/ipfs/QmayeZxHXwJxABX
 
 Make sure to add your secrets to ensure your AI-Agent works properly.
 ```
-
-<details>
-<summary>New to thirdweb?</summary>
-We use <a href="https://thirdweb.com/dashboard/infrastructure/storage">thirdweb Storage</a> to host IPFS contents. If you are new to thirdweb, the command will guide you to create your account or login to your existing account from the browser. (You may need to forward port 8976 if you are accessing a remote console via SSH.)
-</details>
 
 ### Access the Published AI Agent
 
@@ -239,55 +196,6 @@ To help create custom logic, we have an array variable named `queries` that can 
 const query = req.queries.chatQuery[0] as string;
 ```
 The example at https://agents.phala.network/ipfs/QmX5ofLpppdaFuuZx3LvGaAZAXz7zuD6gy5AuzE6cyoz4N?key=2e01c25ca431c806&chatQuery=What%20is%20Uniswap will have a value of `When did humans land on the moon`. `queries` can have any field name, so `chatQuery` is just an example of a field name and not a mandatory name, but remember to update your `index.ts` file logic to use your expected field name.
-
-
-## FAQ
-
-<details>
-<summary><b>What packages can I use in the AI Agent server?</b></summary>
-<ul>
-  <li>Most of the npm packages are supported: viem, onchainkit, ….</li>
-  <li>Some packages with some advanced features are not supported:</li>
-  <ul>
-    <li>Large code size. Compiled bundle should be less than 500kb.</li>
-    <li>Large memory usage, like image generation</li>
-    <li>Web Assembly</li>
-    <li>Browser only features: local storage, service workers, etc</li>
-  </ul>
-</ul>
-</details>
-
-<details>
-<summary><b>What’s the spec of the Javascript runtime?</b></summary>
-<ul>
-  <li>The code runs inside a tailored <a href="https://bellard.org/quickjs/">QuickJS engine</a></li>
-  <li>Available features: ES2023, async, fetch, setTimeout, setInterval, bigint</li>
-  <li>Resource limits</li>
-  <ul>
-    <li>Max execution time ~60s</li>
-    <li>Max memory usage: 16 mb</li>
-    <li>Max code size: 500 kb</li>
-    <li>Limited CPU burst: CPU time between async calls is limited. e.g. Too complex for-loop may hit the burst limit.</li>
-  </ul>
-</ul>
-</details>
-
-<details>
-<summary><b>Why is the serverless platform secure?</b></summary>
-<ul>
-  <li>Your AI Agent code on is fully secure, private, and permissionless. Nobody can manipulate your program, steal any data from it, or censor it.</li>
-  <li>Security: The code is executed in the decentralized TEE network running on Phala Network. It runs code inside a secure blackbox (called enclave) created by the CPU. It generates cryptographic proofs verifiable on Phala blockchain. It proves that the hosted code is exactly the one you deployed.</li>
-  <li>Privacy: You can safely put secrets like API keys or user privacy on Phala Network. The code runs inside TEE hardware blackboxs. The memory of the program is fully encrypted by the TEE. It blocks any unauthorized access to your data.</li>
-  <li>Learn more at <a href="https://phala.network">Phala Network Homepage</a></li>
-</details>
-
-<details>
-<summary><b>What's TEE / Intel SGX?</b></summary>
-<ul>
-  <li><a href="https://collective.flashbots.net/t/tee-sgx-wiki/2019">TEE/SGX wiki</a></li>
-  <li><a href="https://collective.flashbots.net/t/debunking-tee-fud-a-brief-defense-of-the-use-of-tees-in-crypto/2931">Debunking TEE FUD: A Brief Defense of The Use of TEEs in Crypto</a></li>
-</details>
-
 
 ## Commands
 curl https://agents.phala.network/vaults -H 'Content-Type: application/json' -d '{"cid": "QmWTXjtJJUQKacRD2x4Dxj2ysKoo2PKMrSBwV2PBTRuUv6/0", "data": {"brianApiKey": "brian_key"}}'
