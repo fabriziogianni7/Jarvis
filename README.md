@@ -124,9 +124,13 @@ Make sure to replace queries and secret with your values compatible with your AI
 ```
 
 ### Publish Your AI Agent
-Upload your compiled AI Agent code to IPFS.
+Upload your compiled AI Agent code to IPFS using `thirdweb`.
 ```shell
 npm run publish-agent
+```
+or (if the previous method fails) you could alternatively use `CURL`:
+```shell
+npm run alternative-publish-method
 ```
 
 Upon a successful upload, the command should show the URL to access your AI Agent.
