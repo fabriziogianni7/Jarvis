@@ -8,6 +8,7 @@
   "scripts": {
     "build": "phat-fn build --experimentalAsync",
     "test": "tsx src/test.ts",
+    "test-openai": "tsx src/openai.test.ts",
     "lint": "tsc --noEmit",
     "publish-agent": "phat-fn build --experimentalAsync && tsx scripts/publish.ts",
     "alternate-publish-method": "phat-fn build --experimentalAsync && curl -F file=@./dist/index.js https://agents.phala.network/ipfs"
