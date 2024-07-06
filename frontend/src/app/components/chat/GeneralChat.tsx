@@ -1,15 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
+import { keywords } from './chatUtils';
+import React from 'react';
+import useBrian from '@/app/hooks/useBrian';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
     { id: 1, text: 'Hello! How can I help you today?', sender: 'bot' },
   ]);
   const [input, setInput] = useState('');
-    const messagesEndRef = useRef(null);
+  const [brianPrompt, setPrompt] = useState('');
+  const messagesEndRef = useRef(null);
+
+  useBrian({text:brianPrompt})
+
   const handleSend = () => {
     if (input.trim()) {
       setMessages([...messages, { id: messages.length + 1, text: input, sender: 'user' }]);
       setInput('');
+    }
+    const kwd = checkKeywords(input)
+    switch (kwd) {
+      case keywords.brian:
+        setPrompt(input)
+        break;
+    
+      default:
+        break;
     }
   };
 
@@ -17,6 +33,22 @@ const Chat = () => {
     let refCur = messagesEndRef.current as any
     refCur.scrollIntoView({ behavior: 'smooth' }) as unknown as any;
   }, [messages]);
+
+  useEffect(() => {
+    const [lastMessage] = messages.slice(-1);
+    if (lastMessage.sender == "user" && lastMessage.text.includes(keywords.brian))
+      console.log("messages", messages)
+
+  }, [messages]);
+
+  const checkKeywords = (text: string) => {
+    const keywordValues = Object.values(keywords);
+    const foundKeyword = keywordValues.find((value) => text.includes(value));
+    const retvalue = foundKeyword ? foundKeyword : "";
+    return retvalue
+  }
+
+
 
   return (
     <div className="flex flex-col h-[36rem] w-full  text-white rounded-lg shadow-lg overflow-hidden">
@@ -27,20 +59,29 @@ const Chat = () => {
             className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`rounded-lg p-3 ${
-                message.sender === 'user' ? 'bg-slate-700 text-white' : 'bg-slate-300 text-black'
-              }`}
+              className={`rounded-lg p-3 ${message.sender === 'user' ? 'bg-slate-700 text-white' : 'bg-slate-300 text-black'
+                }`}
             >
-              {message.text}
+              {/* Highlight "/action" in the message */}
+              {checkKeywords(message.text) ? (
+                message.text.split(checkKeywords(message.text)).map((part, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && <span className={`bg-slate-300 text-black`}>{checkKeywords(message.text)}</span>}
+                    {part}
+                  </React.Fragment>
+                ))
+              ) : (
+                message.text
+              )}
             </div>
           </div>
         ))}
-          <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} />
       </div>
       <div className="p-4 border-t border-teal-700">
         <input
           type="text"
-         className="w-full p-2 rounded-lg text-neutral-600 focus:outline-none"
+          className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none`}
           placeholder="Type your message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}

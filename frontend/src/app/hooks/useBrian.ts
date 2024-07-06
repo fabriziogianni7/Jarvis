@@ -3,37 +3,103 @@ import { allowedChainids } from "@/app/config/generalConfig";
 import { useEffect, useState } from "react";
 import { parseEther } from "viem";
 import { useAccount, useChainId, useClient, useReadContracts, useSendTransaction } from "wagmi";
+import { BrianResponse } from "./hookUtils";
 
 
+type HookProps = {
+  text: string
+}
 
-export default function useBrian() {
-    const publicClient = useClient({ config: wagmiConfig })
-    const chainId = useChainId() as allowedChainids
-    const { address: userAddress } = useAccount()
-    const [data, setData] = useState<any>()
-    const { sendTransaction } = useSendTransaction()
+export default function useBrian({ text }: HookProps) {
+  const { sendTransaction } = useSendTransaction()
+  const [brianResp, setBrianResp] = useState<BrianResponse>()
 
+  useEffect(() => { console.log(text) }, [text])
 
-    useEffect(() => {
-        sendTransaction({
-          to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-          value: parseEther('0.01'),
-        })
-    },[])
+  const sendPrompt = () => {
+    // should call our agent (api call)
+    // ipfs/asdlkjasbfjhdsbfhsdbfdsbhsdf/brian
+    const mockResponse: BrianResponse = {
+      "result": [
+        {
+          "solver": "Enso",
+          "action": "swap",
+          "type": "write",
+          "data": {
+            "description": "You are about to swap 10 USDC for 0.003187490961853524 ETH ($10) on base using Enso solver. The address receiver is 0x9319...7471.",
+            "steps": [
+              {
+                "chainId": 8453,
+                "blockNumber": 14064487,
+                "from": "0x9319b31838bba444CCeAeD025153a48AD6377471",
+                "to": "0x80EbA3855878739F4710233A8a19d89Bdd2ffB8E",
+                "gasLimit": "337728",
+                "data": "0xb35d7e73000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda029130000000000000000000000000000000000000000000000000000000000989680000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000001a00000000000000000000000000000000000000000000000000000000000000008a9059cbb010001ffffffffff833589fcd6edb6e08f4c7c32d4f71b54bda02913095ea7b3010203ffffffffff833589fcd6edb6e08f4c7c32d4f71b54bda0291319198595a30485ffffffff85111111125421ca6dc452d289314280a0f8842a659bd3b227018504ffffffff056675a323dedb77822fcf39eaa9d682f6abe72555ddcd52200105ffffffffff057e7d64d987cab6eed08a191c4c2459daf2f8ed0b19198595a30586ffffffffff9319b31838bba444cceaed025153a48ad63774716e7a43a3010507ffffffff057e7d64d987cab6eed08a191c4c2459daf2f8ed0b241c59120105ffffffffffff7e7d64d987cab6eed08a191c4c2459daf2f8ed0b000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000001c00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000024000000000000000000000000000000000000000000000000000000000000004a000000000000000000000000000000000000000000000000000000000000004c00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000129b480ad625bcd1a5c3a1c10d708114726fa467000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000027100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000111111125421ca6dc452d289314280a0f8842a6500000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000986f7000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022807ed2379000000000000000000000000e37e799d5077682fa0a244d46e5649f71457bd09000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000e37e799d5077682fa0a244d46e5649f71457bd090000000000000000000000007d585b0e27bbb3d981b7757115ec11f47c4769940000000000000000000000000000000000000000000000000000000000986f70000000000000000000000000000000000000000000000000000afc093482c81e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000d90000000000000000000000000000000000000000bb0000a100008b00004f02a0000000000000000000000000000000000000000000000000000afc093482c81eee63c1e50072ab388e2e2f6facef59e3c3fa2c4e29011c2d38833589fcd6edb6e08f4c7c32d4f71b54bda029134101420000000000000000000000000000000000000600042e1a7d4d0000000000000000000000000000000000000000000000000000000000000000c061111111125421ca6dc452d289314280a0f8842a6500206b4be0b9111111125421ca6dc452d289314280a0f8842a650000000000000097864b9100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000afc093482c81e",
+                "value": "0",
+                "protocol": {
+                  "key": "enso",
+                  "name": "enso",
+                  "logoURI": ""
+                }
+              }
+            ],
+            "gasCostUSD": "",
+            "fromChainId": 8453,
+            "fromAmountUSD": 10,
+            "fromAmount": "10000000",
+            "fromToken": {
+              "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+              "chainId": 8453,
+              "symbol": "USDC",
+              "decimals": 6,
+              "name": "USD Coin",
+              "coinKey": "USDC",
+              "logoURI": "https://static.debank.com/image/coin/logo_url/usdc/e87790bfe0b3f2ea855dc29069b38818.png",
+              "priceUSD": "1"
+            },
+            "fromAddress": "0x9319b31838bba444CCeAeD025153a48AD6377471",
+            "toChainId": 8453,
+            "toAmountUSD": 10.012769733741619,
+            "toAmount": "3187490961853524",
+            "toAmountMin": "3187490961853524",
+            "toToken": {
+              "address": "0x0000000000000000000000000000000000000000",
+              "chainId": 8453,
+              "symbol": "ETH",
+              "decimals": 18,
+              "name": "ETH",
+              "coinKey": "ETH",
+              "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+              "priceUSD": "3141.27"
+            },
+            "toAddress": "0x80EbA3855878739F4710233A8a19d89Bdd2ffB8E"
+          }
+        }
+      ]
+    }
 
+    setBrianResp(mockResponse)
+  }
 
-    // const { data: balances } = useReadContracts({
-    //     contracts: allPools?.flatMap(poolAddress => {
-    //         return [{
-    //             abi: crossChainPoolAbi,
-    //             address: poolAddress,
-    //             functionName: "getTotalProtocolBalances"
-    //         }]
+  const buildTx = () => {
+    sendTransaction({
+      to: brianResp?.result[0].data.steps[0].to as `0x${string}`,
+      value: parseEther(brianResp?.result[0].data.steps[0].value as string),
+      data: brianResp?.result[0].data.steps[0].data as `0x${string}`
+    })
+  }
 
-    //     }) as any,
+  useEffect(() => {
+    if (text) {
+      sendPrompt()
+    }
+  }, [text])
 
-    // })
+  useEffect(() => {
+    if (text) {
+      buildTx()
+    }
+  }, [brianResp])
 
-
-    return { data }
+  return { buildTx, sendPrompt }
 }
