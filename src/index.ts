@@ -1,5 +1,4 @@
 import { Request, Response, route } from './httpSupport'
-import { renderHtml } from './uiSupport'
 
 async function GET(req: Request): Promise<Response> {
     const secret = req.queries?.key ?? '';
@@ -20,13 +19,14 @@ async function GET(req: Request): Promise<Response> {
             })
         });
         const responseData = await response.json();
-        result = responseData.result.text as string;
+        console.log(JSON.stringify(responseData))
+        result = responseData;
     } catch (error) {
         console.error('Error fetching chat completion:', error);
-        result = error;
+        result = { error };
     }
 
-    return new Response(renderHtml(result as string))
+    return new Response(result)
 }
 
 async function POST(req: Request): Promise<Response> {
@@ -35,4 +35,8 @@ async function POST(req: Request): Promise<Response> {
 
 export default async function main(request: string) {
     return await route({ GET, POST }, request)
+}
+
+function call_brian() {
+    
 }
