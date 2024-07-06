@@ -11,11 +11,12 @@ async function execute(inputObj: any) {
 const testLocal = async () => {
     const req: Request = {  
         method:"POST",
-        body: {
+        path:"",
+        body: JSON.stringify({
             prompt: "/tx swap 0.000001 eth for usdt on arbitrum?",
             fromAddress: "0x2DAb3ae0D10da36B840B7855C3420fAC5485C558",
             path:"/tx"
-        },
+        }),
         queries: {
             //key: ["adsdsdhjfdjfkj"] // needed in prod
         },

@@ -1,18 +1,18 @@
 export interface SerializedRequest {
+    method: 'GET' | 'POST' | 'PATCH' | 'PUT';
+    path: string;
     queries: Record<string, string[]>;
     headers: Record<string, string>;
-    method?: 'GET' | 'POST' | 'PATCH' | 'PUT';
-    path?: string;
     body?: string;
     secret?: Record<string, unknown>;
 }
 
 export class Request implements SerializedRequest {
+    method: 'GET' | 'POST' | 'PATCH' | 'PUT';
+    path: string;
     queries: Record<string, string[]>;
     headers: Record<string, string>;
-    method?: 'GET' | 'POST' | 'PATCH' | 'PUT';
-    path?: string;
-    body?: string | any;
+    body?: string;
     secret?: Record<string, unknown>;
     constructor(raw: SerializedRequest) {
         this.body = raw.body;
@@ -33,13 +33,13 @@ type ResponseOption = {
 }
 export class Response {
     status: number;
-    body?: string | any;
+    body?: string;
     headers: Record<string, string>;
     constructor(body: string, options?: ResponseOption) {
         this.status = options?.status ?? 200;
         this.body = body;
         this.headers = {
-            'Content-Type': 'application/json',
+            'Content-Type': 'text/html; charset=UTF-8',
             'Access-Control-Allow-Origin': '*',
             ...options?.headers
         }
