@@ -1,2 +1,15 @@
 npm run build
 
+npm run alternate-publish-method (run the command)
+this get back a cid
+then go here -> https://phat.phala.network/contracts/view/ipfs://QmY9L7rLsR3bHw3XxwWSSNnKTngzvkiWnVWwKj4SCw9nz3/0
+
+{"uri":"ipfs://QmcV7WHRgyUcvBQwsgpTR6P4xsCfqW1ygyf8KCbpnh48xg/0"}%                                                                  
+https://agents.phala.network/ipfs/ipfs://QmY9L7rLsR3bHw3XxwWSSNnKTngzvkiWnVWwKj4SCw9nz3/0
+
+https://agents.phala.network/ipfs/QmY9L7rLsR3bHw3XxwWSSNnKTngzvkiWnVWwKj4SCw9nz3/0
+
+
+https://agents.phala.network/ipfs/Qmed5DshabcvX9Rv6wuZYwDPuqqide8RktksLDA1kA1RKX/0
+
+ipfs://Qmed5DshabcvX9Rv6wuZYwDPuqqide8RktksLDA1kA1RKX/0

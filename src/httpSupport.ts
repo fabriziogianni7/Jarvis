@@ -1,17 +1,17 @@
 export interface SerializedRequest {
-    method: 'GET' | 'POST' | 'PATCH' | 'PUT';
-    path: string;
     queries: Record<string, string[]>;
     headers: Record<string, string>;
+    method?: 'GET' | 'POST' | 'PATCH' | 'PUT';
+    path?: string;
     body?: string;
     secret?: Record<string, unknown>;
 }
 
 export class Request implements SerializedRequest {
-    method: 'GET' | 'POST' | 'PATCH' | 'PUT';
-    path: string;
     queries: Record<string, string[]>;
     headers: Record<string, string>;
+    method?: 'GET' | 'POST' | 'PATCH' | 'PUT';
+    path?: string;
     body?: string | any;
     secret?: Record<string, unknown>;
     constructor(raw: SerializedRequest) {

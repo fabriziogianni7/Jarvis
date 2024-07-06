@@ -6,7 +6,8 @@ export const  call_brian = async (brian_api_key:string, promt: string, fromAddre
                method: 'POST',
                headers: {
                    'Content-Type': 'application/json',
-                   'X-Brian-Api-Key': `${brian_api_key}`
+                   'X-Brian-Api-Key': `brian_Tx48fDpsMdvcpfWII`
+                //    'X-Brian-Api-Key': `${brian_api_key}`
                },
                body: JSON.stringify({
                    address: fromAddress,
@@ -15,7 +16,7 @@ export const  call_brian = async (brian_api_key:string, promt: string, fromAddre
            });
            const responseData = await response.json();
            const returnValue = responseData.result[0].data
-           return returnValue
+           return "returnValue"
      } catch (error) {
        return error
      };
