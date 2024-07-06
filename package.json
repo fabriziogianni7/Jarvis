@@ -9,7 +9,8 @@
     "build": "phat-fn build --experimentalAsync",
     "test": "tsx src/test.ts",
     "lint": "tsc --noEmit",
-    "publish-agent": "phat-fn build --experimentalAsync && tsx scripts/publish.ts"
+    "publish-agent": "phat-fn build --experimentalAsync && tsx scripts/publish.ts",
+    "alternate-publish-method": "phat-fn build --experimentalAsync && curl -F file=@./dist/index.js https://agents.phala.network/ipfs"
   },
   "devDependencies": {
     "@phala/fn": "^0.2.20",
@@ -17,6 +18,5 @@
     "thirdweb": "^5.32.3",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {}
+  }
 }

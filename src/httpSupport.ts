@@ -39,7 +39,7 @@ export class Response {
         this.status = options?.status ?? 200;
         this.body = body;
         this.headers = {
-            'Content-Type': 'text/html; charset=UTF-8',
+            'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
             ...options?.headers
         }
