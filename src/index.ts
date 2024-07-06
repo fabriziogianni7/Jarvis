@@ -37,6 +37,3 @@ export default async function main(request: string) {
     return await route({ GET, POST }, request)
 }
 
-function call_brian() {
-    
-}
