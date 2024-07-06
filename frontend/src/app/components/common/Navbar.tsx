@@ -9,7 +9,7 @@ import Image from 'next/image';
 export default function Navbar() {
     const pathname = usePathname()
     return (
-        <header className="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-4 light:bg-neutral-800">
+        <header className="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-slate-100 text-sm py-4 light:bg-neutral-800">
             <nav className="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between" aria-label="Global">
                 <div className="flex items-center justify-between">
                     <a className="inline-flex items-center gap-x-2 text-xl font-semibold light:text-slate-300" href="#">
@@ -20,7 +20,7 @@ export default function Navbar() {
                             width={70}
                             height={70}
                         /> */}
-                        Jarvis
+                         <span className="bg-clip-text bg-gradient-to-tr from-neutral-500 to-blue-900 text-transparent text-4xl">jarvis</span>
                     </a>
                     <div className="sm:hidden">
                         <button type="button" className="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-slate-300 dark:hover:bg-white/10" data-hs-collapse="#navbar-image-and-text-1" aria-controls="navbar-image-and-text-1" aria-label="Toggle navigation">
