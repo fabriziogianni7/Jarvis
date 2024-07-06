@@ -1,68 +1,59 @@
-import main from './index'
+import { Request } from './httpSupport'
+import main, { POST } from './index'
 import 'dotenv/config'
 
-async function execute(inputObj: any) {
-    const inputJson = JSON.stringify(inputObj)
-    console.log('INPUT:', inputJson)
-    return await main(inputJson)
-}
+const testLocal = async () => {
+    const req: Request = {
+        method: 'GET',
+        path: '/tx', // that's for brian
+        body: {
+            prompt: "/tx swap 0.000001 eth for usdt on arbitrum?",
+            fromAddress: "0x2DAb3ae0D10da36B840B7855C3420fAC5485C558"
+        },
+        queries: {
+            key: ["adsdsdhjfdjfkj"] // needed in prod
+        },
+        secret: { brianApiKey: process.env.BRIAN_API_KEY }, // in prod don't pass that
 
-// Sample body input for a POST request
-const sampleInput = {
-    "untrustedData": {
-        "fid": 2,
-        "url": "https://fcpolls.com/polls/1",
-        "messageHash": "0xd2b1ddc6c88e865a33cb1a565e0058d757042974",
-        "timestamp": 1706243218,
-        "network": 1,
-        "buttonIndex": 2,
-        "castId": {
-            "fid": 226,
-            "hash": "0xa48dd46161d8e57725f5e26e34ec19c13ff7f3b9"
+        headers: {},
+        // in the agewnt you'll pass here:
+        // key: whatever you get when you add brian api key to the vault 
+        async json(): Promise<any> {
+            return JSON.parse(this.body!)
         }
-    },
-    "trustedData": {
-        "messageBytes": "d2b1ddc6c88e865a33cb1a565e0058d757042974..."
+    }
+
+    try {
+        const result = await POST(req)
+        console.log("getResult:", result) // this looks good
+    } catch (error) {
+        console.log("test error!", error)
     }
 }
 
-async function test() {
-    const getResult = await execute({
-        method: 'GET',
-        path: '/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf',
-        queries: {
-            chatQuery: ["swap 0.000001 eth for usdt on arbitrum?"]
-        },
-        secret: { brianApiKey: process.env.BRIAN_API_KEY },
-        headers: {},
-    })
-    console.log('GET RESULT:', JSON.parse(getResult))
+testLocal()
 
-    const postResult = await execute({
+
+
+/**
+ * FRONTEND WILL BE:
+ * axios.post(https://ipfs/<cid>, {
         method: 'POST',
-        path: '/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf',
-        queries: {
-            chatQuery: ["swap 0.000001 eth for usdt on arbitrum?"],
+        path: '/tx', // that's for brian
+        body: {
+            prompt: "/tx swap 0.000001 eth for usdt on arbitrum?",
+            fromAddress: "0x2DAb3ae0D10da36B840B7855C3420fAC5485C558"
         },
-        secret: { brianApiKey: process.env.BRIAN_API_KEY },
-        headers: {},
-        body: JSON.stringify(sampleInput)
-    })
-    console.log('POST RESULT:', JSON.parse(postResult))
-
-    const testArgsString = JSON.stringify({
-        method: 'GET',
-        path: '/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf',
         queries: {
-            chatQuery: ["swap 0.000001 eth for usdt on arbitrum?"]
+            key: ["adsdsdhjfdjfkj"] // needed in prod
         },
-        secret: { brianApiKey: "BRIAN_API_KEY" },
+        secret: { brianApiKey: process.env.BRIAN_API_KEY }, // in prod don't pass that
+
         headers: {},
+        // in the agewnt you'll pass here:
+        // key: whatever you get when you add brian api key to the vault 
+        async json(): Promise<any> {
+            return JSON.parse(this.body!)
+        }
     })
-    console.log(`\nTo test in the SideVM playground go to https://phat.phala.network/contracts/view/0xf0a398600f02ea9b47a86c59aed61387e450e2a99cb8b921cd1d46f734e45409\n\nConnect you polkadot.js account and select 'run_js' with the parameters:\n- engine: SidevmQuickJSWithPolyfill\n- js_code: Source code text of dist/index.ts\n- args: ${testArgsString}`);
-    console.log('Watch video here for to see the visual steps of testing in Sidevm playground: https://www.youtube.com/watch?v=fNqNeLfFFME');
-    console.log(`\nMake sure to replace queries and secret with your values compatible with your AI Agent Contract.`);
-
-}
-
-test().then(() => { }).catch(err => console.error(err)).finally(() => process.exit())
+ */

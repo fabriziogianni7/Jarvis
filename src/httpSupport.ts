@@ -12,7 +12,7 @@ export class Request implements SerializedRequest {
     path: string;
     queries: Record<string, string[]>;
     headers: Record<string, string>;
-    body?: string;
+    body?: string | any;
     secret?: Record<string, unknown>;
     constructor(raw: SerializedRequest) {
         this.body = raw.body;
@@ -33,7 +33,7 @@ type ResponseOption = {
 }
 export class Response {
     status: number;
-    body?: string;
+    body?: string | any;
     headers: Record<string, string>;
     constructor(body: string, options?: ResponseOption) {
         this.status = options?.status ?? 200;

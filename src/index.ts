@@ -1,39 +1,43 @@
 import { Request, Response, route } from './httpSupport'
+import { call_brian } from './internals/brianAgent';
 
-async function GET(req: Request): Promise<Response> {
-    const secret = req.queries?.key ?? '';
-    const brianApiKey = req.secret?.brianApiKey as string;
-    const query = (req.queries.chatQuery) ? req.queries.chatQuery[0] as string : 'swap 0.000001 eth for usdt on arbitrum';
+export const keywords = {
+    brian: "/tx", // just brian
+    chatGpt: "/info", // just chatgpt
+    pond: "/price" // chatgpt -> pond -> gpt again 
+}
+
+
+export async function POST(req: Request): Promise<Response> {
+    const key = req.queries?.key ?? ''; // if that's empty there is smt wronk
+    const path = req.path // /, /tx, /price
+
+    const brian_api_key = req.secret?.brianApiKey as string; // this is an identifier for the api key --> we need to pass it from the FE // this is "BRIAN_API_KEY"
+    const {prompt, fromAddress} = req.body;
     let result;
 
     try {
-        const response = await fetch('https://api.brianknows.org/api/v0/agent/transaction', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Brian-Api-Key': `${brianApiKey}`
-            },
-            body: JSON.stringify({
-                address: "0x2DAb3ae0D10da36B840B7855C3420fAC5485C558",
-                prompt: query,
-            })
-        });
-        const responseData = await response.json();
-        console.log(JSON.stringify(responseData))
-        result = responseData;
+        // const agentId = prompt.split(" ")[0]
+        switch (path) {
+            case keywords.brian:
+                result = await call_brian(brian_api_key, prompt, fromAddress)
+                break;
+            // case keywords.brian:
+            //     result = await call_brian(brian_api_key, prompt)
+            //     break;
+
+            default:
+                break;
+        }
     } catch (error) {
-        console.error('Error fetching chat completion:', error);
+        console.error('Error happened:', error);
         result = { error };
     }
 
     return new Response(result)
 }
 
-async function POST(req: Request): Promise<Response> {
-    return new Response('Not Implemented')
-}
-
 export default async function main(request: string) {
-    return await route({ GET, POST }, request)
+    return await route({  POST }, request)
 }
 
