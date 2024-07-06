@@ -7,7 +7,11 @@ export const keywords = {
     pond: "/price" // chatgpt -> pond -> gpt again 
 }
 
-
+/*
+/////////////////////*
+ for phala: this post call is not working, the response can just return small strings.
+ */////////////////////
+ 
 export async function POST(req: Request) {
     const key = req.queries?.key ?? ''; // if that's empty there is smt wronk
 
@@ -16,20 +20,7 @@ export async function POST(req: Request) {
     const parsedBody = JSON.parse(bodyString)
     let result: any;
     let resp: any
-
     try {
-        // const agentId = prompt.split(" ")[0]
-        // switch (path) {
-        //     case keywords.brian:
-        //         result = await call_brian(brian_api_key, prompt, fromAddress)
-        //         break;
-        //     // case keywords.brian:
-        //     //     result = await call_brian(brian_api_key, prompt)
-        //     //     break;
-
-        //     default:
-        //         break;
-        // }
 
          result = await call_brian(brian_api_key, parsedBody.prompt, parsedBody.fromAddress)
 
@@ -39,13 +30,31 @@ export async function POST(req: Request) {
         result = { error };
     }
         // return new Response("ciao")
-        return new Response(JSON.stringify(result.steps[0].from))
+        return new Response(`
+         from: ${result.steps[0].from.toString()},
+        `)
 
 
 }
 
+export async function GET(req: Request): Promise<Response> {
+    const secret = req.queries?.key ?? '';
+    const prompt = (req.queries.prompt) ? req.queries.prompt[0] as string : '';
+    const fromAddress = (req.queries.fromAddress) ? req.queries.fromAddress[0] as string : '';
+    let result;
+
+    try {
+        result = await call_brian("", prompt, fromAddress)
+    } catch (error) {
+        console.error('Error fetching chat completion:', error);
+        result = error;
+    }
+
+    return new Response(JSON.stringify(result))
+}
+
 export default async function main(request: string) {
-    return await route({ POST }, request)
+    return await route({ GET,POST }, request)
 }
 
 
