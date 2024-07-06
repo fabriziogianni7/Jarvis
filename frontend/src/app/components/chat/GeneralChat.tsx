@@ -2,16 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import { keywords } from './chatUtils';
 import React from 'react';
 import useBrian from '@/app/hooks/useBrian';
+import usePrediction from '@/app/hooks/usePrediction';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
     { id: 1, text: 'Hello! How can I help you today?', sender: 'bot' },
   ]);
   const [input, setInput] = useState('');
-  const [brianPrompt, setPrompt] = useState('');
+  const [brianPrompt, setBrianPrompt] = useState('');
+  const [pondPrompt, setPondPrompt] = useState('');
   const messagesEndRef = useRef(null);
 
-  useBrian({text:brianPrompt})
+  const {isLoading, error, brianDescription} = useBrian({text:brianPrompt})
+  const {isLoading:isPredictionLoading, error:predictionError} = usePrediction({text:pondPrompt})
 
   const handleSend = () => {
     if (input.trim()) {
@@ -21,7 +24,10 @@ const Chat = () => {
     const kwd = checkKeywords(input)
     switch (kwd) {
       case keywords.brian:
-        setPrompt(input)
+        setBrianPrompt(input)
+        break;
+      case keywords.pond:
+        setPondPrompt(input)
         break;
     
       default:
@@ -33,6 +39,17 @@ const Chat = () => {
     let refCur = messagesEndRef.current as any
     refCur.scrollIntoView({ behavior: 'smooth' }) as unknown as any;
   }, [messages]);
+
+  useEffect(() => {
+    if(error ){
+     setMessages([...messages, { id: messages.length + 1, text: error, sender: 'bot' }]);
+      setInput('');
+    }
+    if(brianDescription ){
+     setMessages([...messages, { id: messages.length + 1, text: brianDescription, sender: 'bot' }]);
+      setInput('');
+    }
+  }, [error, brianDescription]);
 
   useEffect(() => {
     const [lastMessage] = messages.slice(-1);
@@ -79,6 +96,31 @@ const Chat = () => {
         <div ref={messagesEndRef} />
       </div>
       <div className="p-4 border-t border-teal-700">
+        {
+          isLoading ?
+          <input
+          type="text"
+          disabled
+         className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none flash-text`}
+          placeholder="Type your message..."
+          value={"Please wait while we build The Transaction with Brian..."}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') handleSend();
+          }}
+        />:
+        isPredictionLoading ?
+         <input
+          type="text"
+          disabled
+          className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none flash-text`}
+          placeholder="Type your message..."
+          value={"Please wait while we load the price prediction with Pond..."}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') handleSend();
+          }}
+        />:
         <input
           type="text"
           className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none`}
@@ -89,6 +131,7 @@ const Chat = () => {
             if (e.key === 'Enter') handleSend();
           }}
         />
+        }
       </div>
     </div>
   );

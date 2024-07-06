@@ -15,7 +15,9 @@ export const call_brian = async (brian_api_key: string, promt: string, fromAddre
             })
         });
         const responseData = await response.json();
-        const returnValue = responseData.result[0].data
+        const returnValue = responseData.error ? {
+            error: responseData.error
+        }  :  responseData.result[0].data 
         return returnValue
     } catch (error) {
         return error

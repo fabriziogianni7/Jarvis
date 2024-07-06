@@ -14,49 +14,33 @@ type HookProps = {
 
 const PHALA_CID = "Qmef5oM4XSdXZHtPPW56b4rKj6TSrMpQPgeBP1pcUy7n3p"
 
-export default function useBrian({ text }: HookProps) {
-  const { sendTransaction } = useSendTransaction()
-  const { address } = useAccount()
-  const [brianResp, setBrianResp] = useState<any>()
-  const [brianDescription, setBrianDescription] = useState<any>()
+export default function usePrediction({ text }: HookProps) {
+  const [prediction, setPredictionResp] = useState<any>()
   const [isLoading, setIsLoading] = useState<boolean>()
   const [error, setError] = useState<string>("")
 
-  useEffect(() => { console.log(text) }, [text])
 
   const sendPrompt = async () => {
     setIsLoading(true)
     const encodedPrompt = encodeURIComponent(text);
-    const brianResponse = await axios.get(`https://agents.phala.network/ipfs/${PHALA_CID}/0?prompt=${encodedPrompt}&fromAddress=${address}`, {
+    const predictionResp = await axios.get(`https://agents.phala.network/ipfs/${PHALA_CID}/0?prompt=${encodedPrompt}`, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
        
       })
-    if(brianResponse?.data?.error){
-      setError(brianResponse.data.error)
-    }else if(brianResponse?.data == null){
+    if(predictionResp?.data?.error){
+      setError(predictionResp.data.error)
+    }else if(predictionResp?.data == null){
       setError("an error occurred")
     }
     else{
-    setBrianResp(brianResponse.data)
-    setBrianDescription(brianResponse.data.description)
+    setPredictionResp(predictionResp.data)
     }
     setIsLoading(false)
   }
 
-
-  const buildTx = async () => {
-    console.log("brian resp: ", brianResp)
-    // debugger
-    
-    sendTransaction({
-      to: brianResp?.steps[0].to as `0x${string}`,
-      value:brianResp?.steps[0].value,
-      data: brianResp?.steps[0].data as `0x${string}`
-    })
-  }
 
   useEffect(() => {
     if (text) {
@@ -64,11 +48,6 @@ export default function useBrian({ text }: HookProps) {
     }
   }, [text])
 
-  useEffect(() => {
-    if (text) {
-      buildTx()
-    }
-  }, [brianResp])
 
-  return { isLoading, error, brianDescription }
+  return { isLoading, error, prediction }
 }
