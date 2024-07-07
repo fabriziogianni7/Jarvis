@@ -1,5 +1,5 @@
 import { Request, Response, route } from './httpSupport'
-import { renderHtml } from './uiSupport'
+//import { renderHtml } from './uiSupport'
 
 async function GET(req: Request): Promise<Response> {
     const secret = req.queries?.key ?? '';
@@ -27,7 +27,7 @@ async function GET(req: Request): Promise<Response> {
         result = error;
     }
 
-    return new Response(renderHtml(result));
+    return new Response(result);
 }
 
 async function POST(req: Request): Promise<Response> {
