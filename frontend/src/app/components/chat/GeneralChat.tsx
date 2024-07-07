@@ -8,7 +8,7 @@ import useInfo from '@/app/hooks/useInfo';
 const Chat = () => {
   const [messages, setMessages] = useState([
     { id: 1, text: `Hello! Try to input /prediction and then a token to get its price prediction, eg: "/prediction WBTC"`, sender: 'bot' },
-    { id: 2, text: 'Try to input /info plus any query to get the answer from the agent eg: "/info what is uniswap"', sender: 'bot' },
+    { id: 2, text: 'Try to input /info plus any query to get the answer from the agent eg: "/info explain trading to my teammate"', sender: 'bot' },
     { id: 3, text: 'Try to input /tx plus any action to do onchain to build and send a transaction, eg: "/tx swap 0.0001 ETH to LINK on base"', sender: 'bot' },
   ]);
   const [input, setInput] = useState('');
