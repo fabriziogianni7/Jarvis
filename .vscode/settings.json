@@ -1,0 +1,6 @@
+{
+    "solidity.formatter": "prettier",
+    "solidity.remappings": [
+         "@openzeppelin/contracts/=@lib/openzeppelin-contracts/contracts/",
+    ]
+}
