@@ -1,12 +1,14 @@
 import { Request, Response, route } from './httpSupport'
 import { call_brian } from './internals/brianAgent';
 import { call_chatgpt } from './internals/chatGPTAgent';
+import { call_mdb } from './internals/mdbAgent';
 import { call_chatgpt_and_pond } from './internals/pondAgent';
 
 export const keywords = {
     brian: "/tx", // just brian
     chatGpt: "/info", // just chatgpt
-    pond: "/prediction" // chatgpt -> pond -> gpt again 
+    pond: "/prediction", // chatgpt -> pond -> gpt again 
+    sentiment: "/sentiment" // chatgpt -> pond -> gpt again 
 }
 
 
@@ -27,9 +29,10 @@ export async function GET(req: Request): Promise<Response> {
             // result =`${splitted[1]} token is predited to move by $ -868.85 in the next hour`
         }
         else if(prompt.includes(keywords.chatGpt)){
-            const splitted = prompt.split(" ")
             result = await call_chatgpt(prompt)
-            // result =`${splitted[1]} token is predited to move by $ -868.85 in the next hour`
+        }
+        else if(prompt.includes(keywords.sentiment)){
+            result = await call_mdb(prompt)
         }
     } catch (error) {
         console.error('Error fetching chat completion:', error);

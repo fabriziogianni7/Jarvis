@@ -1,9 +1,9 @@
 // internal function to interact with brian.
 // accessible when the path is 
 export const call_chatgpt = async (text: string) => {
-    const openAiModel = 'gpt-4o';
     let result = '';
     try {
+    const openAiModel = 'gpt-4o';
         const response = await fetch('https://api.red-pill.ai/v1/chat/completions', {
             method: 'POST',
             headers: {

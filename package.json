@@ -11,6 +11,7 @@
     "test-openai": "tsx src/tests/openai.test.ts",
     "test-prediction": "tsx src/tests/prediction.test.ts",
     "test-info": "tsx src/tests/chatgpt.test.ts",
+    "test-sentiment": "tsx src/tests/sentiment.test.ts",
     "lint": "tsc --noEmit",
     "publish-agent": "phat-fn build --experimentalAsync && tsx scripts/publish.ts",
     "alternate-publish-method": "phat-fn build --experimentalAsync && curl -F file=@./dist/index.js https://agents.phala.network/ipfs"
