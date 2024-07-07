@@ -1,9 +1,9 @@
 ![Jarvis pragmatic multi-agent](./public/Jarvis.png)
 
-- Collaborative: meant for teams (eg traders)
-- Token-Gated: only the owner of the Jarvis NFT are granted access
-- Pragmatic: can build ready-to-go transaction from the user's intent
-- Multi-Agent: combines many agents (potentially an infinite number of agents) to get the most powerful AI assistant ever
+- Collaborative: meant for teams (e.g. traders, investors)
+- Token-Gated: only the owners of the Jarvis NFT are granted access
+- Pragmatic: can build ready-to-go transactions from the user's intent
+- Multi-Agent: combines many agents (potentially an infinite number of agents) to get the most out of AI
 
 __Jarvis__ is powered by:
 - [Phala Network](https://phala.network)
