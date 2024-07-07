@@ -85,7 +85,7 @@ const testLocalgetFail = async () => {
         path:"",
         body: "",
         queries: {
-            prompt: ["//tx transfer 0.000000001 ETH to 0xCCc1b7533693a95ADDC48ff1072073ED6F08dEE6 on base"], // needed in prod
+            prompt: ["/tx transfer 0.000000001 ETH to 0xCCc1b7533693a95ADDC48ff1072073ED6F08dEE6 on base"], // needed in prod
             fromAddress: ["0x21b129D0e055Bc0435b55867828f86b80b78D76f"]
         },
         secret: { }, // in prod don't pass that

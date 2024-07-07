@@ -6,17 +6,17 @@ import usePrediction from '@/app/hooks/usePrediction';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
-    { id: 2, text: `Hello! Try to input /prediction and then a token to get its price prediction, eg: "/prediction LINK"`, sender: 'bot' },
-    { id: 3, text: 'Try to input /info plus any query to get the answer from the agent eg: "/info what is uniswap"', sender: 'bot' },
-    { id: 4, text: 'Try to input /tx plus any action to do onchain to build and send a transaction, eg: "/tx swap 0.0001 ETH to LINK on base"', sender: 'bot' },
+    { id: 1, text: `Hello! Try to input /prediction and then a token to get its price prediction, eg: "/prediction WBTC"`, sender: 'bot' },
+    { id: 2, text: 'Try to input /info plus any query to get the answer from the agent eg: "/info what is uniswap"', sender: 'bot' },
+    { id: 3, text: 'Try to input /tx plus any action to do onchain to build and send a transaction, eg: "/tx swap 0.0001 ETH to LINK on base"', sender: 'bot' },
   ]);
   const [input, setInput] = useState('');
   const [brianPrompt, setBrianPrompt] = useState('');
   const [pondPrompt, setPondPrompt] = useState('');
   const messagesEndRef = useRef(null);
 
-  const {isLoading, error, brianDescription} = useBrian({text:brianPrompt})
-  const {isLoading:isPredictionLoading, error:predictionError} = usePrediction({text:pondPrompt})
+  const { isLoading, error, brianDescription } = useBrian({ text: brianPrompt })
+  const { isLoading: isPredictionLoading, error: predictionError, prediction } = usePrediction({ text: pondPrompt })
 
   const handleSend = () => {
     if (input.trim()) {
@@ -31,7 +31,7 @@ const Chat = () => {
       case keywords.pond:
         setPondPrompt(input)
         break;
-    
+
       default:
         break;
     }
@@ -43,15 +43,23 @@ const Chat = () => {
   }, [messages]);
 
   useEffect(() => {
-    if(error ){
-     setMessages([...messages, { id: messages.length + 1, text: error, sender: 'bot' }]);
+    if (error) {
+      setMessages([...messages, { id: messages.length + 1, text: error, sender: 'bot' }]);
       setInput('');
     }
-    if(brianDescription ){
-     setMessages([...messages, { id: messages.length + 1, text: brianDescription, sender: 'bot' }]);
+    if (brianDescription) {
+      setMessages([...messages, { id: messages.length + 1, text: brianDescription, sender: 'bot' }]);
       setInput('');
     }
-  }, [error, brianDescription]);
+    if (predictionError) {
+      setMessages([...messages, { id: messages.length + 1, text: predictionError, sender: 'bot' }]);
+      setInput('');
+    }
+    if (prediction) {
+      setMessages([...messages, { id: messages.length + 1, text: prediction, sender: 'bot' }]);
+      setInput('');
+    }
+  }, [error, brianDescription, predictionError, prediction]);
 
   useEffect(() => {
     const [lastMessage] = messages.slice(-1);
@@ -62,7 +70,7 @@ const Chat = () => {
 
   const checkKeywords = (text: string) => {
     const keywordValues = Object.values(keywords);
-    const foundKeyword = keywordValues.find((value) => text.includes(value));
+    const foundKeyword = keywordValues.find((value) => text?.includes(value)) as any;
     const retvalue = foundKeyword ? foundKeyword : "";
     return retvalue
   }
@@ -99,39 +107,39 @@ const Chat = () => {
       <div className="p-4 border-t border-teal-700">
         {
           isLoading ?
-          <input
-          type="text"
-          disabled
-         className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none flash-text`}
-          placeholder="Type your message..."
-          value={"Please wait while we build The Transaction with Brian..."}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') handleSend();
-          }}
-        />:
-        isPredictionLoading ?
-         <input
-          type="text"
-          disabled
-          className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none flash-text`}
-          placeholder="Type your message..."
-          value={"Please wait while we load the price prediction with Pond..."}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') handleSend();
-          }}
-        />:
-        <input
-          type="text"
-          className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none`}
-          placeholder="Type your message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') handleSend();
-          }}
-        />
+            <input
+              type="text"
+              disabled
+              className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none flash-text`}
+              placeholder="Type your message..."
+              value={"Please wait while we build The Transaction with Brian..."}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') handleSend();
+              }}
+            /> :
+            isPredictionLoading ?
+              <input
+                type="text"
+                disabled
+                className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none flash-text`}
+                placeholder="Type your message..."
+                value={"Please wait while we load the price prediction with Pond..."}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') handleSend();
+                }}
+              /> :
+              <input
+                type="text"
+                className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none`}
+                placeholder="Type your message..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') handleSend();
+                }}
+              />
         }
       </div>
     </div>

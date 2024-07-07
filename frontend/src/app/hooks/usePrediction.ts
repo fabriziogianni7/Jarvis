@@ -1,5 +1,5 @@
 import { wagmiConfig } from "@/app/config/WagmiConfig";
-import { allowedChainids } from "@/app/config/generalConfig";
+import { PHALA_CID, allowedChainids } from "@/app/config/generalConfig";
 import { useEffect, useState } from "react";
 import { formatUnits, parseEther } from "viem";
 import { useAccount, useChainId, useClient, useEstimateGas, usePrepareTransactionRequest, useReadContracts, useSendTransaction } from "wagmi";
@@ -12,7 +12,9 @@ type HookProps = {
   text: string
 }
 
-const PHALA_CID = "Qmef5oM4XSdXZHtPPW56b4rKj6TSrMpQPgeBP1pcUy7n3p"
+// // const PHALA_CID = "Qmef5oM4XSdXZHtPPW56b4rKj6TSrMpQPgeBP1pcUy7n3p"
+// // const PHALA_CID = "QmWcWgGz59AByhQHYhy8nJUxvohNpASwaxjpovnxDK7gez" ok
+// const PHALA_CID = "QmRBQ4pCtKEE5ZaDPQAbUFnevdbdctSnFLhjHg2pNQ4aBS"
 
 export default function usePrediction({ text }: HookProps) {
   const [prediction, setPredictionResp] = useState<any>()
@@ -22,15 +24,15 @@ export default function usePrediction({ text }: HookProps) {
 
   const sendPrompt = async () => {
     setIsLoading(true)
-    const encodedPrompt = encodeURIComponent(text);
-    const predictionResp = await axios.get(`https://agents.phala.network/ipfs/${PHALA_CID}/0?prompt=${encodedPrompt}`, {
+    try {
+       const predictionResp :any= await axios.get(`https://agents.phala.network/ipfs/${PHALA_CID}/0?prompt=${text}`, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
        
       })
-    if(predictionResp?.data?.error){
+    if(predictionResp?.data.error){
       setError(predictionResp.data.error)
     }else if(predictionResp?.data == null){
       setError("an error occurred")
@@ -39,6 +41,10 @@ export default function usePrediction({ text }: HookProps) {
     setPredictionResp(predictionResp.data)
     }
     setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+   
   }
 
 

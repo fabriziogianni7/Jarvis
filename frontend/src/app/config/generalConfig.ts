@@ -1,5 +1,4 @@
 
-import { poolFactoryAbi } from "../abis/poolFactoryAbi";
 import * as all from "viem/chains";
 
 const { ...chains } = all;
@@ -22,3 +21,5 @@ export function getChain(chainId: number) {
 
     throw new Error(`Chain with id ${chainId} not found`);
 }
+
+export const PHALA_CID="QmRBQ4pCtKEE5ZaDPQAbUFnevdbdctSnFLhjHg2pNQ4aBS"

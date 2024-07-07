@@ -1,5 +1,5 @@
 import { wagmiConfig } from "@/app/config/WagmiConfig";
-import { allowedChainids } from "@/app/config/generalConfig";
+import { PHALA_CID, allowedChainids } from "@/app/config/generalConfig";
 import { useEffect, useState } from "react";
 import { formatUnits, parseEther } from "viem";
 import { useAccount, useChainId, useClient, useEstimateGas, usePrepareTransactionRequest, useReadContracts, useSendTransaction } from "wagmi";
@@ -12,7 +12,8 @@ type HookProps = {
   text: string
 }
 
-const PHALA_CID = "Qmef5oM4XSdXZHtPPW56b4rKj6TSrMpQPgeBP1pcUy7n3p"
+// const PHALA_CID = "Qmef5oM4XSdXZHtPPW56b4rKj6TSrMpQPgeBP1pcUy7n3p"// working
+// const PHALA_CID = "QmWcWgGz59AByhQHYhy8nJUxvohNpASwaxjpovnxDK7gez"// working
 
 export default function useBrian({ text }: HookProps) {
   const { sendTransaction } = useSendTransaction()
@@ -49,7 +50,6 @@ export default function useBrian({ text }: HookProps) {
 
   const buildTx = async () => {
     console.log("brian resp: ", brianResp)
-    // debugger
     
     sendTransaction({
       to: brianResp?.steps[0].to as `0x${string}`,
