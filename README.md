@@ -18,7 +18,7 @@ Browse the deployed [__Demo App__](https://jarvis-orpin-one.vercel.app) or watch
 
 ## Our Feedback for overall DevEx
 ### MBD
-Awesome playground, facilitating pleasant DevEx good and easy API calls
+- Awesome playground, facilitating pleasant DevEx good and easy API calls
 
 ### Phala Network
 - Not clear how to upload the secrets to TEE
@@ -100,6 +100,12 @@ Test it with `curl`.
 
 ```bash
 curl https://agents.phala.network/ipfs/<your-cid>
+```
+
+### Run the Front End
+```shell
+cd frontend
+yarn && yarn dev
 ```
 
 ### Add Secrets
