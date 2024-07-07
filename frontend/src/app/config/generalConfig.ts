@@ -22,4 +22,4 @@ export function getChain(chainId: number) {
     throw new Error(`Chain with id ${chainId} not found`);
 }
 
-export const PHALA_CID="QmRBQ4pCtKEE5ZaDPQAbUFnevdbdctSnFLhjHg2pNQ4aBS"
+export const PHALA_CID="QmbYTLmfKPyv9bNEFwirosDez1twxZZQDu9DF3PqFeSa3A"

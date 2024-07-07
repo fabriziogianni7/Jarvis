@@ -1,5 +1,5 @@
-import { Request } from './httpSupport'
-import main, { GET, POST } from './index'
+import { Request } from '../httpSupport'
+import main, { GET, POST } from '../index'
 import 'dotenv/config'
 
 async function execute(inputObj: any) {

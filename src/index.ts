@@ -1,5 +1,6 @@
 import { Request, Response, route } from './httpSupport'
 import { call_brian } from './internals/brianAgent';
+import { call_chatgpt } from './internals/chatGPTAgent';
 import { call_chatgpt_and_pond } from './internals/pondAgent';
 
 export const keywords = {
@@ -23,6 +24,11 @@ export async function GET(req: Request): Promise<Response> {
         else if(prompt.includes(keywords.pond)){
             const splitted = prompt.split(" ")
             result = await call_chatgpt_and_pond(splitted[1])
+            // result =`${splitted[1]} token is predited to move by $ -868.85 in the next hour`
+        }
+        else if(prompt.includes(keywords.chatGpt)){
+            const splitted = prompt.split(" ")
+            result = await call_chatgpt(prompt)
             // result =`${splitted[1]} token is predited to move by $ -868.85 in the next hour`
         }
     } catch (error) {

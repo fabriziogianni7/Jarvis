@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import 'dotenv/config'
-import { Request } from './httpSupport';
-import main, { GET, POST } from './index'
+import { Request } from '../httpSupport';
+import main, { GET, POST } from '../index'
 
 
 async function test() {

@@ -3,6 +3,7 @@ import { keywords } from './chatUtils';
 import React from 'react';
 import useBrian from '@/app/hooks/useBrian';
 import usePrediction from '@/app/hooks/usePrediction';
+import useInfo from '@/app/hooks/useInfo';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
@@ -13,10 +14,12 @@ const Chat = () => {
   const [input, setInput] = useState('');
   const [brianPrompt, setBrianPrompt] = useState('');
   const [pondPrompt, setPondPrompt] = useState('');
+  const [infoPrompt, setInfoPrompt] = useState('');
   const messagesEndRef = useRef(null);
 
   const { isLoading, error, brianDescription } = useBrian({ text: brianPrompt })
   const { isLoading: isPredictionLoading, error: predictionError, prediction } = usePrediction({ text: pondPrompt })
+  const { isLoading: isInfoLoading, error: infoError, info} = useInfo({ text: infoPrompt })
 
   const handleSend = () => {
     if (input.trim()) {
@@ -30,6 +33,9 @@ const Chat = () => {
         break;
       case keywords.pond:
         setPondPrompt(input)
+        break;
+      case keywords.chatGpt:
+        setInfoPrompt(input)
         break;
 
       default:
@@ -59,7 +65,15 @@ const Chat = () => {
       setMessages([...messages, { id: messages.length + 1, text: prediction, sender: 'bot' }]);
       setInput('');
     }
-  }, [error, brianDescription, predictionError, prediction]);
+    if (info) {
+      setMessages([...messages, { id: messages.length + 1, text: info, sender: 'bot' }]);
+      setInput('');
+    }
+    if (infoError) {
+      setMessages([...messages, { id: messages.length + 1, text: infoError, sender: 'bot' }]);
+      setInput('');
+    }
+  }, [error, brianDescription, predictionError, prediction, info, infoError]);
 
   useEffect(() => {
     const [lastMessage] = messages.slice(-1);
@@ -130,6 +144,18 @@ const Chat = () => {
                   if (e.key === 'Enter') handleSend();
                 }}
               /> :
+              isInfoLoading ?
+               <input
+                type="text"
+                disabled
+                className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none flash-text`}
+                placeholder="Type your message..."
+                value={"Please wait while we reaosonate on this info with chatgpt"}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') handleSend();
+                }}
+              />:
               <input
                 type="text"
                 className={`w-full p-2 rounded-lg text-neutral-600 focus:outline-none`}
