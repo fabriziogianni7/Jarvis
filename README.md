@@ -169,8 +169,3 @@ To help create custom logic, we have an array variable named `queries` that can 
 const query = req.queries.chatQuery[0] as string;
 ```
 The example at https://agents.phala.network/ipfs/QmX5ofLpppdaFuuZx3LvGaAZAXz7zuD6gy5AuzE6cyoz4N?key=2e01c25ca431c806&chatQuery=What%20is%20Uniswap will have a value of `When did humans land on the moon`. `queries` can have any field name, so `chatQuery` is just an example of a field name and not a mandatory name, but remember to update your `index.ts` file logic to use your expected field name.
-
-## Useful Curl Commands
-`curl https://agents.phala.network/vaults -H 'Content-Type: application/json' -d '{"cid": "QmWTXjtJJUQKacRD2x4Dxj2ysKoo2PKMrSBwV2PBTRuUv6/0", "data": {"brianApiKey": "brian_key"}}'`
-
-`curl https://agents.phala.network/ipfs/QmWTXjtJJUQKacRD2x4Dxj2ysKoo2PKMrSBwV2PBTRuUv6/0\?key\=the_key_from_previous_call`
