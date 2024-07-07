@@ -13,3 +13,10 @@ https://agents.phala.network/ipfs/QmY9L7rLsR3bHw3XxwWSSNnKTngzvkiWnVWwKj4SCw9nz3
 https://agents.phala.network/ipfs/Qmed5DshabcvX9Rv6wuZYwDPuqqide8RktksLDA1kA1RKX/0
 
 ipfs://Qmed5DshabcvX9Rv6wuZYwDPuqqide8RktksLDA1kA1RKX/0
+
+
+forge script script/DeployJarvis.s.sol --broadcast --rpc-url https://base-mainnet.g.alchemy.com/v2/bKcObA1FpUs7SY_MK78EuzUM2m4J5980
+
+
+name: Jumbo-J
+teammate: 0xCCc1b7533693a95ADDC48ff1072073ED6F08dEE6

@@ -16,17 +16,19 @@ contract Jarvis is ERC721, Ownable {
         s_mintFee = _mintFee;
     }
 
-    function mintToken(string memory tokenName) public payable returns (uint256) {
+    function mintToken(string memory tokenName, address teammate) public payable returns (uint256) {
         require(msg.value >= s_mintFee, "Insufficient fee");
 
         s_tokenIds +=  1;
-        uint256 newTokenId = s_tokenIds;
-        _mint(msg.sender, newTokenId);
-        _setTokenName(newTokenId, tokenName);
+        _mint(msg.sender, s_tokenIds);
+        _setTokenName(s_tokenIds, tokenName);
+        s_tokenIds +=  1;
+        _mint(teammate, s_tokenIds);
+        _setTokenName(s_tokenIds, tokenName);
 
-        emit Minted(msg.sender, newTokenId, tokenName);
+        emit Minted(msg.sender, s_tokenIds, tokenName);
 
-        return newTokenId;
+        return s_tokenIds;
     }
 
     function _setTokenName(uint256 tokenId, string memory tokenName) internal {

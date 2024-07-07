@@ -8,9 +8,10 @@ import ReactMarkdown from 'react-markdown';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
-    { id: 1, text: `Hello! Try to input /prediction and then a token to get its price prediction, eg: "/prediction WBTC"`, sender: 'bot' },
-    { id: 2, text: 'Try to input /info plus any query to get the answer from the agent eg: "/info explain trading to my teammate"', sender: 'bot' },
-    { id: 3, text: 'Try to input /tx plus any action to do onchain to build and send a transaction, eg: "/tx swap 0.0001 ETH to LINK on base"', sender: 'bot' },
+    { id: 1, text: `Hello! I'm **Jumbo-J**. Your colleague **0xCCc1b7533693a95ADDC48ff1072073ED6F08dEE6** will collaborate with you.`, sender: 'bot' },
+    { id: 2, text: `Try to input /prediction and then a token to get its price prediction, eg: "/prediction WBTC"`, sender: 'bot' },
+    { id: 3, text: 'Try to input /info plus any query to get the answer from the agent eg: "/info explain trading to my teammate"', sender: 'bot' },
+    { id: 4, text: 'Try to input /tx plus any action to do onchain to build and send a transaction, eg: "/tx swap 0.0001 ETH to LINK on base"', sender: 'bot' },
   ]);
   const [input, setInput] = useState('');
   const [brianPrompt, setBrianPrompt] = useState('');
@@ -107,8 +108,13 @@ const Chat = () => {
               {checkKeywords(message.text) ? (
                 message.text.split(checkKeywords(message.text)).map((part, index) => (
                   <React.Fragment key={index}>
+                    
                     {index > 0 && <span className={`bg-slate-300 text-black font-bold`}>{checkKeywords(message.text)}</span>}
-                    {part}
+                    
+                     <ReactMarkdown>
+                      {part}
+                      </ReactMarkdown>
+                   
                   </React.Fragment>
                 ))
               ) : (

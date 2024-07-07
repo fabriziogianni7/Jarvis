@@ -20,7 +20,7 @@ contract JarvisTest is Test {
         string memory tokenName = "TokenName";
        
         vm.prank(address(1));
-        jarvis.mintToken{value: fee}(tokenName);
+        jarvis.mintToken{value: fee}(tokenName,address(2));
         
         // Verify the token ID and name
         assertEq(jarvis.getTokenName(1), tokenName);

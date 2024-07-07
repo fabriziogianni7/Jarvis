@@ -23,3 +23,4 @@ export function getChain(chainId: number) {
 }
 
 export const PHALA_CID="QmbYTLmfKPyv9bNEFwirosDez1twxZZQDu9DF3PqFeSa3A"
+export const JARVIS_ADDRESS="0x118b880e56C1D50C398800601Cd06Ee7Ad74008a"
