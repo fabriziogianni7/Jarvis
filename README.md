@@ -5,91 +5,51 @@
 - Pragmatic: can build ready-to-go transaction from the user's intent
 - Multi-Agent: combines many agents (potentially an infinite number of agents) to get the most powerful AI assistant ever
 
+__Jarvis__ is powered by:
+- [Phala Network](https://phala.network)
+- [Brian](https://www.brianknows.org)
+- [Pond](https://cryptopond.xyz)
+- [Base](https://www.base.org)
+- [MBD](https://www.mbd.xyz)
+
+![Jarvis pragmatic multi-agent](./public/Jarvis-quote.png)
+
+Browse the deployed [__Demo App__](https://jarvis-orpin-one.vercel.app) or watch the [__Ultra-short Explainer Video__](https://www.youtube.com/watch?v=2keF5hi94xU)
+
+## Our Feedback for overall DevEx
+### MBD
+Awesome playground, facilitating pleasant DevEx good and easy API calls
+
+### Phala Network
+- Not clear how to upload the secrets to TEE
+- The [POST method](https://github.com/fabriziogianni7/Jarvis/blob/d9ea315ca960a15d90ceaf99dca00043381ae0bf/src/index.ts#L50) did not work
+- Difficult to troubleshoot and debug the API
+
+### Pond
+- Slow API response times
+- No explanations on the response format
+
+### Brian
+- Lack of testnets
+- Vague error response messages (e.g. the actual error was the wrong network, but the response was too generic)
+- Does [NOT](https://github.com/fabriziogianni7/Jarvis/blob/d9ea315ca960a15d90ceaf99dca00043381ae0bf/frontend/src/app/hooks/useBrian.ts#L54) work with Metamask
+
 ## Getting Started
-### Prepare
-Install dependencies
+### Install dependencies
 ```shell
-npm install
+npm i
 ```
 
-### Testing Locally
-Create `.env` file and add your Brian API Key
-```shell
-cp .env.local .env
-```
+Include all your secrets in `.env` file and add it to `.gitignore`
 
-Include all your secrets `.env` file replace `YOUR_BRIAN_KEY` with your API Key. Check the Brian API docs here https://docs.brianknows.org/brian-api-beta/apis/agent-apis
-```text
-BRIAN_API_KEY="YOUR_BRIAN_KEY"
-```
-
-Build your Agent
+### Build
 ```shell
 npm run build
 ```
 
-Test your Agent locally
+### Test Locally
 ```shell
 npm run test
-```
-
-Expected Test Results
-```shell
-
-INPUT: {"method":"GET","path":"/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf","queries":{"chatQuery":["What is Uniswap?"]},"secret":{"brianApiKey":"brian_xNVZeeA6mH1fuHIx1"},"headers":{}}
-GET RESULT: {
-  status: 200,
-  body: '\n' +
-    '    <!DOCTYPE html>\n' +
-    '    <html lang="en">\n' +
-    '        <head>\n' +
-    '            <meta charset="utf-8" />\n' +
-    '            <title>AI Agent Contract Demo UI</title>\n' +
-    '        </head>\n' +
-    '        <body>\n' +
-    '            <div align="center">\n' +
-    '                <p>"Brian AI Agent Contract hosted on <a href="https://github.com/Phala-Network/ai-agent-template-brian">Phala Network</a>, an AI Coprocessor for hosting AI Agents."</p>\n' +
-    '                <img src="https://i.imgur.com/8B3igON.png" width="600" alt="AI Agent Contract" />\n' +
-    '                <p>"Overview:\n' +
-    'Uniswap is a decentralized finance (DeFi) protocol that allows users to swap various Ethereum-based tokens without the need for intermediaries or order books. It operates on the Ethereum blockchain and uses automated smart contracts to facilitate token exchanges.\n' +
-    '\n' +
-    'The Uniswap Protocol:\n' +
-    'At the core of Uniswap is an automated liquidity protocol that enables users to trade tokens directly from their wallets. Liquidity providers contribute tokens to various pools, which are then used to facilitate trades. These providers earn fees on trades executed through the protocol, proportional to their share of the liquidity pool.\n' +
-    '\n' +
-    'Swaps:\n' +
-    "The primary function of Uniswap is token swaps, where users can exchange one ERC-20 token for another directly on the platform. This process is fast, efficient, and does not require centralized exchanges or counterparties. Uniswap's automated market maker (AMM) system ensures that trades are always executed at fair market prices based on the available liquidity in the pool.\n" +
-    '\n' +
-    'Glossary:\n' +
-    "To better understand Uniswap and its features, it's helpful to familiarize yourself with some key terms commonly used in the protocol. Some important terms include liquidity provider, automated market maker (AMM), liquidity pool, slippage, and impermanent loss. Having a solid grasp of these concepts will enhance your ability to navigate and utilize Uniswap effectively.\n" +
-    '\n' +
-    'In conclusion, Uniswap is a groundbreaking DeFi protocol that has revolutionized the way users trade tokens on the Ethereum blockchain. By leveraging automated smart contracts and decentralized liquidity pools, Uniswap provides a seamless and efficient trading experience for users looking to swap tokens in a decentralized manner."</p>\n' +
-    '            </div>\n' +
-    '        </body>\n' +
-    '    </html>',
-  headers: {
-    'Content-Type': 'text/html; charset=UTF-8',
-    'Access-Control-Allow-Origin': '*'
-  }
-}
-INPUT: {"method":"POST","path":"/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf","queries":{"chatQuery":["What is Uniswap?"]},"secret":{"brianApiKey":"brian_xNVZeeA6mH1fuHIx1"},"headers":{},"body":"{\"untrustedData\":{\"fid\":2,\"url\":\"https://fcpolls.com/polls/1\",\"messageHash\":\"0xd2b1ddc6c88e865a33cb1a565e0058d757042974\",\"timestamp\":1706243218,\"network\":1,\"buttonIndex\":2,\"castId\":{\"fid\":226,\"hash\":\"0xa48dd46161d8e57725f5e26e34ec19c13ff7f3b9\"}},\"trustedData\":{\"messageBytes\":\"d2b1ddc6c88e865a33cb1a565e0058d757042974...\"}}"}
-POST RESULT: {
-  status: 200,
-  body: 'Not Implemented',
-  headers: {
-    'Content-Type': 'text/html; charset=UTF-8',
-    'Access-Control-Allow-Origin': '*'
-  }
-}
-
-To test in the SideVM playground go to https://phat.phala.network/contracts/view/0xf0a398600f02ea9b47a86c59aed61387e450e2a99cb8b921cd1d46f734e45409
-
-Connect you polkadot.js account and select 'run_js' with the parameters:
-- engine: SidevmQuickJSWithPolyfill
-- js_code: Source code text of dist/index.ts
-- args: {"method":"GET","path":"/ipfs/QmVHbLYhhYA5z6yKpQr4JWr3D54EhbSsh7e7BFAAyrkkMf","queries":{"chatQuery":["What is Uniswap?"]},"secret":{"brianApiKey":"BRIAN_API_KEY"},"headers":{}}
-Watch video here for to see the visual steps of testing in Sidevm playground: https://www.youtube.com/watch?v=fNqNeLfFFME
-
-Make sure to replace queries and secret with your values compatible with your AI Agent Contract.
 ```
 
 ### Publish Your AI Agent
@@ -97,12 +57,12 @@ Upload your compiled AI Agent code to IPFS using `thirdweb`.
 ```shell
 npm run publish-agent
 ```
-or (if the previous method fails) you could alternatively use `CURL`:
+or (if thirdweb fails on you, like it did on us) use `CURL`:
 ```shell
 curl -F file=@./dist/index.js https://agents.phala.network/ipfs
 ```
 
-Upon a successful upload, the command should show the URL to access your AI Agent.
+The command should show the URL to access your AI Agent.
 ```shell
 > phat-gpt-template@0.0.1 publish-agent
 > phat-fn build --experimentalAsync && tsx scripts/publish.ts
@@ -134,9 +94,9 @@ Make sure to add your secrets to ensure your AI-Agent works properly.
 
 ### Access the Published AI Agent
 
-Once published, your AI Agent is available at the URL: `https://agents.phala.network/ipfs/<your-cid>`. You can get it from the "Publish to IPFS" step.
+Once published, your AI Agent will be available at the URL: `https://agents.phala.network/ipfs/<your-cid>`. You can get it from the "Publish to IPFS" step.
 
-You can test it with `curl`.
+Test it with `curl`.
 
 ```bash
 curl https://agents.phala.network/ipfs/<your-cid>
