@@ -1,6 +1,6 @@
 export const keywords = {
     brian: "/tx", // just brian
     chatGpt: "/info", // just chatgpt
-    pond: "/price" // chatgpt -> pond -> gpt again 
+    pond: "/prediction" // chatgpt -> pond -> gpt again 
 }
 

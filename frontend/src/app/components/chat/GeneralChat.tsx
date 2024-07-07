@@ -6,7 +6,9 @@ import usePrediction from '@/app/hooks/usePrediction';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
-    { id: 1, text: 'Hello! How can I help you today?', sender: 'bot' },
+    { id: 2, text: `Hello! Try to input /prediction and then a token to get its price prediction, eg: "/prediction LINK"`, sender: 'bot' },
+    { id: 3, text: 'Try to input /info plus any query to get the answer from the agent eg: "/info what is uniswap"', sender: 'bot' },
+    { id: 4, text: 'Try to input /tx plus any action to do onchain to build and send a transaction, eg: "/tx swap 0.0001 ETH to LINK on base"', sender: 'bot' },
   ]);
   const [input, setInput] = useState('');
   const [brianPrompt, setBrianPrompt] = useState('');
@@ -79,11 +81,10 @@ const Chat = () => {
               className={`rounded-lg p-3 ${message.sender === 'user' ? 'bg-slate-700 text-white' : 'bg-slate-300 text-black'
                 }`}
             >
-              {/* Highlight "/action" in the message */}
               {checkKeywords(message.text) ? (
                 message.text.split(checkKeywords(message.text)).map((part, index) => (
                   <React.Fragment key={index}>
-                    {index > 0 && <span className={`bg-slate-300 text-black`}>{checkKeywords(message.text)}</span>}
+                    {index > 0 && <span className={`bg-slate-300 text-black font-bold`}>{checkKeywords(message.text)}</span>}
                     {part}
                   </React.Fragment>
                 ))
