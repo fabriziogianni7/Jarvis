@@ -4,6 +4,7 @@ import React from 'react';
 import useBrian from '@/app/hooks/useBrian';
 import usePrediction from '@/app/hooks/usePrediction';
 import useInfo from '@/app/hooks/useInfo';
+import ReactMarkdown from 'react-markdown';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
@@ -111,7 +112,7 @@ const Chat = () => {
                   </React.Fragment>
                 ))
               ) : (
-                message.text
+               <ReactMarkdown>{message.text}</ReactMarkdown>
               )}
             </div>
           </div>
