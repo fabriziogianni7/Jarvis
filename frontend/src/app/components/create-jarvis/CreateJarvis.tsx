@@ -64,6 +64,7 @@ export const CreateJarvis = () => {
                     <option value="chatgpt">Chat GPT</option>
                     <option value="pond">Pond</option>
                     <option value="brian">Brian</option>
+                    <option value="mdb">MBD</option>
                 </select>
                 <button
                     onClick={() => { writeContract({
