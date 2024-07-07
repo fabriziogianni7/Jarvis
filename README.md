@@ -1,3 +1,6 @@
+![Jarvis pragmatic multi-agent](./public/Jarvis.png)
+
+
 ## Getting Started
 ### Prepare
 Install dependencies
